@@ -1,0 +1,88 @@
+*,*::before,*::after{
+    box-sizing: border-box;
+}
+h1, h2, h3, h4, h5, p, ul{
+    margin: 0;
+    padding: 0;
+}
+button{
+    cursor: pointer;
+    outline: none;
+}
+
+.container{
+    max-width: 1180px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.header{
+    padding: 2% 0;
+}
+.header__btn-star, .header__timer{
+    font-size: 16px;
+    color:  rgb(75, 67, 43);
+    line-height: 1.2;
+}
+.header__btn-start{
+    padding: 10px 25px;
+    border: 2px solid rgb(243, 216, 128);
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    transition: all .3s;
+}
+.header__btn-start:hover{
+    background-color: rgb(243, 216, 128);
+}
+.game-field{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+.game-card__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-card{
+    perspective: 1000;
+}
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+.game-card.game-card-hover .flipper {
+    transform: rotateY(180deg);
+}
+.game-card, .front, .back {
+    width: 150px;
+    height: 200px;
+}
+.front, .back {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+}
+.front {
+    z-index: 2;
+    background-color: rgb(243, 216, 128);
+    border: 5px solid rgb(243, 216, 128);
+}
+.back{
+    border: 5px solid rgb(243, 216, 128);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.back img{
+    display: block;
+    max-width: 100%;
+}
+
+/* обратная, изначально скрытая сторона */
+.back {
+ transform: rotateY(180deg);
+}
