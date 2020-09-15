@@ -19,20 +19,28 @@ button{
 .header{
     padding: 2% 0;
 }
-.header__btn-star, .header__timer{
+.header__inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1%;
+}
+.header__btn-start, .header__clock{
     font-size: 16px;
     color:  rgb(75, 67, 43);
     line-height: 1.2;
 }
 .header__btn-start{
-    padding: 10px 25px;
+    padding: 10px 0;
     border: 2px solid rgb(243, 216, 128);
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
     transition: all .3s;
+    width: 142px;
 }
 .header__btn-start:hover{
     background-color: rgb(243, 216, 128);
+    color: rgb(255, 255, 255);
 }
 .game-field{
     display: grid;
