@@ -38,11 +38,15 @@ button{
     transition: all .3s;
     width: 142px;
 }
-.header__btn-start:hover{
-    background-color: rgb(243, 216, 128);
-    color: rgb(255, 255, 255);
+@media(min-width: 992px){
+    .header__btn-start:hover{
+        background-color: rgb(243, 216, 128);
+        color: rgb(255, 255, 255);
+    }
 }
 .game-field{
+    max-width: 500px;
+    margin: 0 auto 2%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
@@ -94,8 +98,42 @@ button{
     max-height: 80%;
     max-width: 80%;
 }
-
-/* обратная, изначально скрытая сторона */
 .back {
- transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+@media(max-width: 1000px){
+    .header{
+        padding: 2% 0 3%;
+    }
+}
+@media(max-width: 700px){
+    .header{
+        padding: 3% 0 4%;
+    }
+}
+@media(max-width: 550px){
+    .game-field {
+        max-width: 400px;
+    }
+}
+@media(max-width: 450px){
+    .header{
+        padding: 3% 0 5%;
+    }
+    .game-field {
+        max-width: 350px;
+        grid-gap: 15px;
+    }
+    .game-card__wrapper{
+        height: 80px;
+    }
+    .game-card, .front, .back {
+        width: 60px;
+    }        
+}
+@media(max-width: 350px){
+    .game-field {
+        max-width: 300px;
+    }
 }

@@ -34,7 +34,7 @@ function shuffle(array) {
 
 function getArrayRandomCart(){
     arr.length = 0;
-    for (let i = 0; i < 2; i++){
+    for (let i = 0; i < 8; i++){
         arr.push(i);
         arr.push(i);
     }
@@ -72,50 +72,43 @@ let clickCard = function(){
         if ($(this).hasClass('game-card-hover') && (numbersCard.length == 0 || 
         (numbersCard.length == 1 && $(numbersCard[0]).parent().index() != $(this).parent().index()))){
             numbersCard.push(this);
-            console.log(numbersCard);
             $('.header__btn-start').attr('disabled', false);
         }
         if (!$(this).hasClass('game-card-hover') && 
         numbersCard.length == 1 && $(numbersCard[0]).find('img').attr('src') == $(this).find('img').attr('src')){
             numbersCard.length = 0;
-            console.log(numbersCard);
             $('.header__btn-start').attr('disabled', false);
         }
 
         if (numbersCard.length == 2){
             if ($(numbersCard[0]).find('img').attr('src')
             == $(numbersCard[1]).find('img').attr('src')){
-                console.log("совпадение", numbersCard);
                 setTimeout(()=>{
+                    $('.header__btn-start').attr('disabled', false);
 
-                    $(numbersCard[0]).toggle(500);
-                    $(numbersCard[1]).toggle(500);
-                                        console.log(numbersCard);
-                    numbersCard.length = 0;
                     let T = true;
                     $('.game-card').each(function(i, el){
-                        if ($(el).is(':visible')){
+                        if ($(el).css('display') != 'none' && !(el == numbersCard[0] || el == numbersCard[1])){
                             T = false;
                             return false;
                         }
                     });
 
                     if (T){
-                        console.log(3);
-                        defaultsCards($('.header__btn-start'));
+                        setTimeout(defaultsCards, 2000, $('.header__btn-start'));
                     }
-                    $('.header__btn-start').attr('disabled', false);
-
-                }, 2000);
+                    $(numbersCard[0]).toggle(500);
+                    $(numbersCard[1]).toggle(500);
+                    numbersCard.length = 0;
+                }, 1000);
             } else{
-                console.log("совпадений нет", numbersCard);
                 setTimeout(()=>{
                         $(numbersCard[0]).toggleClass('game-card-hover');
                         $(numbersCard[1]).toggleClass('game-card-hover');
                         numbersCard.length = 0;
                         $('.header__btn-start').attr('disabled', false);
                     }
-                ,2000);
+                ,1000);
             }
         }
     }
@@ -125,10 +118,11 @@ $('.header__btn-start').on('click', function(){
     if ($(this).attr('data-state') == 'start'){
         getArrayRandomCart();
         $(this).attr('disabled', true);
+        $('.header__clock').text('00:00:00');
         $(this).text("Стоп");
         $(this).attr('data-state', 'stop');
 
-        setTimeout(gameCartFlip, 3000);
+        setTimeout(gameCartFlip, 2000);
         setTimeout(hideCartFlip, 5000);
     
     } else if ($(this).attr('data-state') == 'stop'){
