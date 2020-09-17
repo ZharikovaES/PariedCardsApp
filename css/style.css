@@ -51,21 +51,24 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100px;
 }
 .game-card{
+    height: 100px;
+    max-height: 100%;
     perspective: 1000;
 }
 .flipper {
     transition: 0.6s;
     transform-style: preserve-3d;
     position: relative;
+    height: 100%;
 }
 .game-card.game-card-hover .flipper {
     transform: rotateY(180deg);
 }
 .game-card, .front, .back {
-    width: 150px;
-    height: 200px;
+    width: 75px;
 }
 .front, .back {
     backface-visibility: hidden;
@@ -73,21 +76,23 @@ button{
     top: 0;
     left: 0;
     border-radius: 20px;
+    height: 100%;
 }
 .front {
     z-index: 2;
     background-color: rgb(243, 216, 128);
-    border: 5px solid rgb(243, 216, 128);
+    border: 3px solid rgb(243, 216, 128);
 }
 .back{
-    border: 5px solid rgb(243, 216, 128);
+    border: 3px solid rgb(243, 216, 128);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .back img{
     display: block;
-    max-width: 100%;
+    max-height: 80%;
+    max-width: 80%;
 }
 
 /* обратная, изначально скрытая сторона */
