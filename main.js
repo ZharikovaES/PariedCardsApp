@@ -1,5 +1,45 @@
-let arr = [];
 let numbersCard = new Array();
+
+let clickCard = function(){
+    if (numbersCard.length == 0){
+        $('.header__btn-start').attr('disabled', true);
+        $(this).toggleClass('game-card-hover');
+        numbersCard.push(this);
+        $('.header__btn-start').attr('disabled', false);
+    } else if (numbersCard.length == 1){
+        $('.header__btn-start').attr('disabled', true);
+        $(this).toggleClass('game-card-hover');
+        numbersCard.push(this);
+
+        if ($(numbersCard[1]).hasClass('game-card-hover') && $(numbersCard[0]).find('img').attr('src') == $(numbersCard[1]).find('img').attr('src')){
+            setTimeout(()=>{
+                let T = true;
+                $(numbersCard[0]).toggle(500);
+                $(numbersCard[1]).toggle(500);
+                numbersCard.length = 0;
+
+                $('.game-card').each(function(i, el){
+                    if ($(el).is(':visible')){
+                        T = false;
+                        return false;
+                    }
+                });
+                if (T){ setTimeout(defaultsCards, 2000); } else { 
+                    $('.header__btn-start').attr('disabled', false);
+                }
+            }, 1000);
+        } else {
+            setTimeout(()=>{
+                if ($(numbersCard[0]).find('img').attr('src') != $(numbersCard[1]).find('img').attr('src')){
+                    $(numbersCard[0]).toggleClass('game-card-hover');
+                    $(numbersCard[1]).toggleClass('game-card-hover');
+                }
+                numbersCard.length = 0;
+                $('.header__btn-start').attr('disabled', false);
+            }, 1000);
+        }
+    }
+}
 
 function gameCartFlip(){
     $('.game-card').toggleClass('game-card-hover');
@@ -14,26 +54,22 @@ function hideCartFlip(){
 }
 
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
   
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
   
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
     }
-  
     return array;
 }
 
 function getArrayRandomCart(){
-    arr.length = 0;
+    let arr = [];
+
     for (let i = 0; i < 8; i++){
         arr.push(i);
         arr.push(i);
@@ -45,9 +81,8 @@ function getArrayRandomCart(){
     });
 }
 
-function defaultsCards(btnStart){
-    btnStart.text("Начать игру!");
-    btnStart.attr('data-state', 'start');
+function defaultsCards(){
+    let btnStart = $('.header__btn-start');
 
     $('.game-card').each(function(){
         if ($(this).hasClass('game-card-hover')){
@@ -60,58 +95,12 @@ function defaultsCards(btnStart){
 
         $(this).unbind('click', clickCard);
     });
+
+    btnStart.text("Начать игру!");
+    btnStart.attr('data-state', 'start');
+    btnStart.attr('disabled', false);
+    
     numbersCard.length = 0;
-
-}
-
-let clickCard = function(){
-    if (numbersCard.length < 2){
-        $('.header__btn-start').attr('disabled', true);
-
-        $(this).toggleClass('game-card-hover');
-        if ($(this).hasClass('game-card-hover') && (numbersCard.length == 0 || 
-        (numbersCard.length == 1 && $(numbersCard[0]).parent().index() != $(this).parent().index()))){
-            numbersCard.push(this);
-            $('.header__btn-start').attr('disabled', false);
-        }
-        if (!$(this).hasClass('game-card-hover') && 
-        numbersCard.length == 1 && $(numbersCard[0]).find('img').attr('src') == $(this).find('img').attr('src')){
-            numbersCard.length = 0;
-            $('.header__btn-start').attr('disabled', false);
-        }
-
-        if (numbersCard.length == 2){
-            if ($(numbersCard[0]).find('img').attr('src')
-            == $(numbersCard[1]).find('img').attr('src')){
-                setTimeout(()=>{
-                    $('.header__btn-start').attr('disabled', false);
-
-                    let T = true;
-                    $('.game-card').each(function(i, el){
-                        if ($(el).css('display') != 'none' && !(el == numbersCard[0] || el == numbersCard[1])){
-                            T = false;
-                            return false;
-                        }
-                    });
-
-                    if (T){
-                        setTimeout(defaultsCards, 2000, $('.header__btn-start'));
-                    }
-                    $(numbersCard[0]).toggle(500);
-                    $(numbersCard[1]).toggle(500);
-                    numbersCard.length = 0;
-                }, 1000);
-            } else{
-                setTimeout(()=>{
-                        $(numbersCard[0]).toggleClass('game-card-hover');
-                        $(numbersCard[1]).toggleClass('game-card-hover');
-                        numbersCard.length = 0;
-                        $('.header__btn-start').attr('disabled', false);
-                    }
-                ,1000);
-            }
-        }
-    }
 }
 
 $('.header__btn-start').on('click', function(){
@@ -126,7 +115,7 @@ $('.header__btn-start').on('click', function(){
         setTimeout(hideCartFlip, 5000);
     
     } else if ($(this).attr('data-state') == 'stop'){
-        defaultsCards($(this));
+        defaultsCards();
     }    
 });
 
@@ -165,3 +154,4 @@ function showTime(hour, minutes, seconds){
 
     setTimeout(showTime, 1000, +hour, +minutes, ++seconds);
 }
+
