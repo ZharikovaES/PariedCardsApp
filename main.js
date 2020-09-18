@@ -16,15 +16,15 @@ let clickCard = function(){
                 let T = true;
                 $(numbersCard[0]).toggle(500);
                 $(numbersCard[1]).toggle(500);
-                numbersCard.length = 0;
 
                 $('.game-card').each(function(i, el){
-                    if ($(el).is(':visible')){
+                    if ($(el).is(':visible') && !(el == numbersCard[0] || el == numbersCard[1])){
                         T = false;
                         return false;
                     }
                 });
-                if (T){ setTimeout(defaultsCards, 2000); } else { 
+                if (T){ setTimeout(defaultsCards, 2000); } else {
+                    numbersCard.length = 0; 
                     $('.header__btn-start').attr('disabled', false);
                 }
             }, 1000);
